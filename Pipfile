@@ -15,6 +15,7 @@ plotly-express = "*"
 nbformat = "*"
 
 [dev-packages]
+notebook = "*"
 
 [requires]
 python_version = "3.9"
