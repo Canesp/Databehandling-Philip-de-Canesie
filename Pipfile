@@ -20,6 +20,7 @@ lxml = "*"
 python-dotenv = "*"
 dash = "*"
 dash-bootstrap-components = "*"
+beautifulsoup4 = "*"
 
 [dev-packages]
 notebook = "*"
