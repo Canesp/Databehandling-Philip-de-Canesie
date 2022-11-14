@@ -12,24 +12,18 @@ from layout import Layout
 directory_path = os.path.dirname(__file__)
 path = os.path.join(directory_path, "stockdata")
 
-print(path)
-
 stockdata_object = StockData(path)
-
-# pick one stock
-# print(stockdata_object.stock_dataframe("AAPL"))
 
 symbol_dict = {"AAPL": "Apple", "NVDA": "Nvidia", "TSLA": "Tesla", "IBM": "IBM"}
 
 df_dict = {symbol: stockdata_object.stock_dataframe(symbol) for symbol in symbol_dict}
 
-
-
-print(df_dict.keys())
-# print(df_dict["TSLA"][0])
-
 # creates the dash app
-app = dash.Dash(__name__)
+app = dash.Dash(
+    __name__,
+    external_stylesheets=[dbc.themes.MATERIA],
+    meta_tags=[dict(name="viewport", content="width=device-width, initial-scale=1.0")],
+)
 
 app.layout = Layout(symbol_dict).layout()
 

@@ -1,9 +1,10 @@
 from dash import html, dcc
+import dash_bootstrap_components as dbc
+
 
 class Layout:
-
     def __init__(self, symbol_dict: dict) -> None:
-        
+
         self._symbol_dict = symbol_dict
 
         self._stock_options_dropdown = [
@@ -11,7 +12,8 @@ class Layout:
         ]
 
         self._ohlc_options = [
-            {"label": option, "value": option} for option in ("open", "high", "low", "close")
+            {"label": option, "value": option}
+            for option in ("open", "high", "low", "close")
         ]
 
         self._slider_marks = {
@@ -23,21 +25,45 @@ class Layout:
 
     def layout(self):
 
-        return html.Main(
+        return dbc.Container(
             [
-                html.H1("Techy stocks viewer"),
-                html.P("Choose a stock"),
-                dcc.Dropdown(
-                    id="stockpicker-dropdown",
-                    options=self._stock_options_dropdown,
-                    value="AAPL",
+                dbc.Card(
+                    dbc.CardBody(html.H1("Techy stocks viewer")), class_name="mt-3"
+                ),
+                dbc.Row(
+                    class_name= "mt-4",
+                    children= [
+                        dbc.Col(html.P("Choose a stock"), class_name="mt-1"),
+
+                        dbc.Col(
+                            dcc.Dropdown(
+                                id="stockpicker-dropdown",
+                                options=self._stock_options_dropdown,
+                                value="AAPL",
+                            ), lg= "4",
+                        ),
+
+                        dbc.Col(
+                            dbc.Card(
+                                dcc.RadioItems(
+                                    id="ohlc-radio",
+                                    options=self._ohlc_options,
+                                    value="close",
+                                )
+                            )
+                        ),
+                    ]
                 ),
                 html.P(id="highest-value"),
                 html.P(id="lowest-value"),
-                dcc.RadioItems(id="ohlc-radio", options=self._ohlc_options, value="close"),
                 dcc.Graph(id="stock-graph"),
                 dcc.Slider(
-                    id="time-slider", min=0, max=6, marks=self._slider_marks, value=2, step=None
+                    id="time-slider",
+                    min=0,
+                    max=6,
+                    marks=self._slider_marks,
+                    value=2,
+                    step=None,
                 ),
                 # storing intermediate value on clients browser in order to share between several callbacks
                 dcc.Store(id="filtered-df"),
