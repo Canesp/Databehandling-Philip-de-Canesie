@@ -21,6 +21,7 @@ python-dotenv = "*"
 dash = "*"
 dash-bootstrap-components = "*"
 beautifulsoup4 = "*"
+numexpr = "*"
 
 [dev-packages]
 notebook = "*"
